@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyDiary</title>
+  <link rel="stylesheet" href="style.css"> 
+
+  <!-- As android app -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#e8ddcb">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="/icons/apple-icon-180.png">
+</head>
+<body>
+  
+  <header>
+    <nav>
+      <div class="logo-container">
+        <img id="logo-light" src="icons/logo-dark2.svg" alt="MyDiary Light Mode Logo">
+        <img id="logo-dark" src="icons/logo-dark1.svg" alt="MyDiary Dark Mode Logo">
+        <h1>MyDiary</h1>
+      </div>
+      <div id="theme-toggle-container">
+        <svg id="theme-toggle-svg" width="40" height="40" viewBox="0 0 100 100">
+          <!-- Sun/Moon container -->
+          <g id="theme-icon">
+            <!-- Sun circle -->
+            <circle id="sun" cx="50" cy="50" r="24" fill="#FFD700" stroke="#FF8C00" stroke-width="2">
+              <!-- Animation will be applied to this -->
+            </circle>
+            
+            <!-- Sun rays -->
+            <g id="sun-rays">
+              <line x1="50" y1="15" x2="50" y2="5" stroke="#FFD700" stroke-width="4" stroke-linecap="round" />
+              <line x1="50" y1="85" x2="50" y2="95" stroke="#FFD700" stroke-width="4" stroke-linecap="round" />
+              <line x1="15" y1="50" x2="5" y2="50" stroke="#FFD700" stroke-width="4" stroke-linecap="round" />
+              <line x1="85" y1="50" x2="95" y2="50" stroke="#FFD700" stroke-width="4" stroke-linecap="round" />
+              <line x1="74" y1="26" x2="82" y2="18" stroke="#FFD700" stroke-width="4" stroke-linecap="round" />
+              <line x1="26" y1="74" x2="18" y2="82" stroke="#FFD700" stroke-width="4" stroke-linecap="round" />
+              <line x1="74" y1="74" x2="82" y2="82" stroke="#FFD700" stroke-width="4" stroke-linecap="round" />
+              <line x1="26" y1="26" x2="18" y2="18" stroke="#FFD700" stroke-width="4" stroke-linecap="round" />
+            </g>
+            
+            <!-- Moon overlay (hidden by default) -->
+            <circle id="moon-shadow" cx="65" cy="40" r="24" fill="#1f2937" visibility="hidden" />
+          </g>
+        </svg>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main content section -->
+  <main>
+    <div class="container">
+      <aside class="sidebar">
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+          <button class="tab-button active" data-tab="entry-form">New Entry</button>
+          <button class="tab-button" data-tab="about">About</button>
+          <button class="tab-button" data-tab="media">Media</button>
+        </div>
+        
+        <!-- Tab Content -->
+        <div class="tab-content">
+          <!-- New Entry Tab (your existing form) -->
+          <section id="entry-form" class="tab-pane active">
+            <h2>New Entry</h2>
+            <form id="entry-form">
+              <!-- Your existing form fields -->
+              <input type="text" id="entry-title" placeholder="Enter title" required autofocus>
+              <textarea id="entry-content" placeholder="Your thoughts..." required></textarea>
+              <div class="image-preview-container" id="image-preview-container">
+                <img id="image-preview" src="" alt="Image preview">
+                <div class="preview-actions">
+                  <button type="button" id="remove-image">Remove Image</button>
+                </div>
+              </div>
+              <div class="drag-instruction">Drag & drop an image or use the file selector below</div>
+              <input type="file" id="entry-image" accept="image/*">
+              <input type="date" id="entry-date" required>
+              <div class="tags">
+                <label for="entry-tags">Tags</label>
+                <input type="text" id="entry-tags" placeholder="Tags (e.g., Cats, Travel)">
+              </div>
+              <button type="submit">Add Entry</button>
+            </form>
+          </section>
+          
+          <!-- About Tab -->
+          <section id="about" class="tab-pane">
+            <h2>About MyDiary</h2>
+            <p>Welcome to MyDiary, your personal journaling space. Track your thoughts, memories, and experiences.</p>
+            <div class="user-profile">
+              <h3>Your Profile</h3>
+              <p>Customize your diary experience and settings here.</p>
+              <!-- Add profile settings or info here -->
+            </div>
+          </section>
+          
+          <!-- Media Tab -->
+          <section id="media" class="tab-pane">
+            <h2>Media Player</h2>
+            <div class="audio-player">
+              <h3>Special music for a good concentration</h3>
+              <p>Play relaxing background sounds while you write.</p>
+              <audio controls>
+                <source src="audio/Penguin Piano - Love story Indila.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+            
+            <div class="video-section">
+              <h3>Video</h3>
+              <p>Semestralke ZMT (Multimedia).</p>
+              <video controls width="100%">
+                <source src="video/project.mp4" type="video/mp4">
+                Your browser does not support the video element.
+              </video>
+              <p>This video inspires for creative ideas.</p>
+            </div>
+          </section>
+        </div>
+      </aside>
+
+      <div class="entries">
+        <section class="filter">
+          <label for="category-filter">Filter by Category</label>
+          <select id="category-filter">
+            <option value="all">All</option>
+            <option value="cats">Cats</option>
+            <option value="travel">Travel</option>
+            <option value="thoughts">Thoughts</option>
+          </select>
+        </section>
+
+        <section class="entries-list">
+        </section>
+      </div>
+
+      <!-- Fixed Modal Structure -->
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <div class="nav-arrows">
+            <button id="prev-entry" class="nav-arrow">&lt;</button>
+            <button id="next-entry" class="nav-arrow">&gt;</button>
+          </div>
+          <h2 id="modal-title"></h2>
+          <p id="modal-date"></p>
+          <p id="modal-tags"></p>
+          <p id="modal-content"></p>
+          <img id="modal-image" src="" alt="" style="max-width: 100%; display: none;">
+        </div>
+      </div>
+
+      <div id="edit-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeEditModal()">&times;</span>
+          <h2>Edit Entry</h2>
+          <form id="edit-form">
+            <input type="text" id="edit-title" placeholder="Title">
+            <textarea id="edit-content" placeholder="Content"></textarea>
+            <input type="date" id="edit-date">
+            <input type="text" id="edit-tags" placeholder="Tags">
+            <input type="file" id="edit-image">
+            <button type="submit" id="edit-btn">Update Entry</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal2" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <div class="nav-arrows">
+            <button id="prev-entry" class="nav-arrow">&lt;</button>
+            <button id="next-entry" class="nav-arrow">&gt;</button>
+          </div>
+          <h2 id="modal-title"></h2>
+          <p id="modal-date"></p>
+          <p id="modal-content"></p>
+          <img id="modal-image" src="" alt="" style="max-width: 100%; display: none;">
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer section -->
+  <footer>
+    <p>&copy; 2025 MyDiary. All rights reserved.</p>
+  </footer>
+
+  <script src="js/Entry.js"></script>
+  <script src="js/EntryManager.js"></script>
+  <script src="js/UIManager.js"></script>
+  <script src="js/ModalManager.js"></script>
+  <script src="js/FormManager.js"></script>
+  <script src="js/FilterManager.js"></script>
+  <script src="js/TabManager.js"></script>
+  <script src="js/ThemeManager.js"></script>
+  <script src="js/DragDropManager.js"></script>
+  <script src="js/JournalApp.js"></script>
+  
+ <script>
+  document.addEventListener('DOMContentLoaded', function() {
+   JournalApp.start();
+    });
+  </script>
+
+
+</body>
+</html>

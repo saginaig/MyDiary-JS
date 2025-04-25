@@ -1,0 +1,11 @@
+{
+    "name": "MyDiary",
+    "short_name": "MyDiary",
+    "description": "A personal journaling application to track thoughts and memories",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#f5f1eb",
+    "theme_color": "#e8ddcb",
+    "orientation": "portrait-primary"
+    
+  }
