@@ -83,6 +83,16 @@ class EntryManager {
     return Array.from(uniqueTags);
   }
   
+  // SECURITY FIX: Escape HTML to prevent XSS attacks
+  escapeHtml(unsafe) {
+    return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+  
   // Display entries with optional tag filtering
   displayEntries(filterTag = null) {
     const entriesContainer = document.querySelector(".entries-list");
@@ -133,27 +143,27 @@ class EntryManager {
       entryCard.classList.add("entry-card");
       entryCard.setAttribute("data-index", originalIndex); // Store index as attribute
       
-      // Create a content wrapper div to better control the layout
+      // SECURITY FIX: Escape user content to prevent XSS
       let cardHTML = `
         <div class="entry-card-content">
-          <h3>${entry.title}</h3>
-          <p><strong>Date & Time:</strong> ${entry.dateTime}</p>
+          <h3>${this.escapeHtml(entry.title)}</h3>
+          <p><strong>Date & Time:</strong> ${this.escapeHtml(entry.dateTime)}</p>
       `;
       
       // Add tags if they exist
       if (entry.tags && entry.tags.trim() !== "") {
-        cardHTML += `<p><strong>Tags:</strong> ${entry.tags}</p>`;
+        cardHTML += `<p><strong>Tags:</strong> ${this.escapeHtml(entry.tags)}</p>`;
       }
       
       // Add content wrapper
-      cardHTML += `<p class="content ${entry.content.length > 250 ? 'long' : ''}">${entry.content}</p>`;
+      cardHTML += `<p class="content ${entry.content.length > 250 ? 'long' : ''}">${this.escapeHtml(entry.content)}</p>`;
       
       // Add toggle button if content is long
       if (entry.content.length > 250) {
         cardHTML += `<button class="toggle-btn visible">Показать больше</button>`;
       }
       
-      // Add image if it exists
+      // Add image if it exists (src should be safe base64 data URL)
       if (entry.image) {
         cardHTML += `<img src="${entry.image}" alt="Entry image">`;
       }
@@ -278,6 +288,7 @@ class EntryManager {
         image: modalImage
       });
       
+      // SECURITY: Using textContent is safe (already secure in your code)
       if (modalTitle) modalTitle.textContent = entry.title;
       if (modalDate) modalDate.textContent = `Date & Time: ${entry.dateTime}`;
       
