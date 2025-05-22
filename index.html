@@ -44,7 +44,7 @@
             </g>
             
             <!-- Moon overlay (hidden by default) -->
-            <circle id="moon-shadow" cx="65" cy="40" r="24" fill="#1f2937" visibility="hidden" />
+            <circle id="moon-shadow" cx="65" cy="40" r="24" fill="#1f2937" style="visibility: hidden;" />
           </g>
         </svg>
       </div>
@@ -64,49 +64,56 @@
         
         <!-- Tab Content -->
         <div class="tab-content">
-          <!-- New Entry Tab (your existing form) -->
-          <section id="entry-form" class="tab-pane active">
+          <!-- New Entry Tab -->
+          <div id="entry-form" class="tab-pane active">
             <h2>New Entry</h2>
-            <form id="entry-form">
-              <!-- Your existing form fields -->
+            <form id="entry-form-form">
+              <label for="entry-title">Title</label>
               <input type="text" id="entry-title" placeholder="Enter title" required autofocus>
+              
+              <label for="entry-content">Content</label>
               <textarea id="entry-content" placeholder="Your thoughts..." required></textarea>
+              
               <div class="image-preview-container" id="image-preview-container">
-                <img id="image-preview" src="" alt="Image preview">
+                <img id="image-preview" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Image preview">
                 <div class="preview-actions">
                   <button type="button" id="remove-image">Remove Image</button>
                 </div>
               </div>
-              <div class="drag-instruction">Drag & drop an image or use the file selector below</div>
+              <div class="drag-instruction">Drag &amp; drop an image or use the file selector below</div>
+              
+              <label for="entry-image">Image</label>
               <input type="file" id="entry-image" accept="image/*">
+              
+              <label for="entry-date">Date</label>
               <input type="date" id="entry-date" required>
+              
               <div class="tags">
                 <label for="entry-tags">Tags</label>
                 <input type="text" id="entry-tags" placeholder="Tags (e.g., Cats, Travel)">
               </div>
               <button type="submit">Add Entry</button>
             </form>
-          </section>
+          </div>
           
           <!-- About Tab -->
-          <section id="about" class="tab-pane">
+          <div id="about" class="tab-pane">
             <h2>About MyDiary</h2>
             <p>Welcome to MyDiary, your personal journaling space. Track your thoughts, memories, and experiences.</p>
             <div class="user-profile">
               <h3>Your Profile</h3>
               <p>Customize your diary experience and settings here.</p>
-              <!-- Add profile settings or info here -->
             </div>
-          </section>
+          </div>
           
           <!-- Media Tab -->
-          <section id="media" class="tab-pane">
+          <div id="media" class="tab-pane">
             <h2>Media Player</h2>
             <div class="audio-player">
               <h3>Special music for a good concentration</h3>
               <p>Play relaxing background sounds while you write.</p>
               <audio controls>
-                <source src="audio/Penguin Piano - Love story Indila.mp3" type="audio/mpeg">
+                <source src="audio/Penguin%20Piano%20-%20Love%20story%20Indila.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
               </audio>
             </div>
@@ -114,18 +121,18 @@
             <div class="video-section">
               <h3>Video</h3>
               <p>Semestralke ZMT (Multimedia).</p>
-              <video controls width="100%">
+              <video controls style="width: 100%;">
                 <source src="video/project.mp4" type="video/mp4">
                 Your browser does not support the video element.
               </video>
               <p>This video inspires for creative ideas.</p>
             </div>
-          </section>
+          </div>
         </div>
       </aside>
 
       <div class="entries">
-        <section class="filter">
+        <div class="filter">
           <label for="category-filter">Filter by Category</label>
           <select id="category-filter">
             <option value="all">All</option>
@@ -133,13 +140,13 @@
             <option value="travel">Travel</option>
             <option value="thoughts">Thoughts</option>
           </select>
-        </section>
+        </div>
 
-        <section class="entries-list">
-        </section>
+        <div class="entries-list">
+        </div>
       </div>
 
-      <!-- Fixed Modal Structure -->
+      <!-- Modal Structure -->
       <div id="modal1" class="modal">
         <div class="modal-content">
           <span class="close-btn">&times;</span>
@@ -147,11 +154,11 @@
             <button id="prev-entry" class="nav-arrow">&lt;</button>
             <button id="next-entry" class="nav-arrow">&gt;</button>
           </div>
-          <h2 id="modal-title"></h2>
+          <h2 id="modal-title">Entry Title</h2>
           <p id="modal-date"></p>
           <p id="modal-tags"></p>
           <p id="modal-content"></p>
-          <img id="modal-image" src="" alt="" style="max-width: 100%; display: none;">
+          <img id="modal-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="max-width: 100%; display: none;">
         </div>
       </div>
 
@@ -160,11 +167,21 @@
           <span class="close-btn" onclick="closeEditModal()">&times;</span>
           <h2>Edit Entry</h2>
           <form id="edit-form">
+            <label for="edit-title">Title</label>
             <input type="text" id="edit-title" placeholder="Title">
+            
+            <label for="edit-content">Content</label>
             <textarea id="edit-content" placeholder="Content"></textarea>
+            
+            <label for="edit-date">Date</label>
             <input type="date" id="edit-date">
+            
+            <label for="edit-tags">Tags</label>
             <input type="text" id="edit-tags" placeholder="Tags">
+            
+            <label for="edit-image">Image</label>
             <input type="file" id="edit-image">
+            
             <button type="submit" id="edit-btn">Update Entry</button>
           </form>
         </div>
@@ -174,13 +191,13 @@
         <div class="modal-content">
           <span class="close-btn">&times;</span>
           <div class="nav-arrows">
-            <button id="prev-entry" class="nav-arrow">&lt;</button>
-            <button id="next-entry" class="nav-arrow">&gt;</button>
+            <button id="prev-entry-2" class="nav-arrow">&lt;</button>
+            <button id="next-entry-2" class="nav-arrow">&gt;</button>
           </div>
-          <h2 id="modal-title"></h2>
-          <p id="modal-date"></p>
-          <p id="modal-content"></p>
-          <img id="modal-image" src="" alt="" style="max-width: 100%; display: none;">
+          <h2 id="modal-title-2">Entry Title</h2>
+          <p id="modal-date-2"></p>
+          <p id="modal-content-2"></p>
+          <img id="modal-image-2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="max-width: 100%; display: none;">
         </div>
       </div>
 
@@ -191,7 +208,8 @@
   <footer>
     <p>&copy; 2025 MyDiary. All rights reserved.</p>
   </footer>
-
+  
+  <script src="js/SecurityUtils.js"></script>
   <script src="js/Entry.js"></script>
   <script src="js/EntryManager.js"></script>
   <script src="js/UIManager.js"></script>
@@ -203,12 +221,11 @@
   <script src="js/DragDropManager.js"></script>
   <script src="js/JournalApp.js"></script>
   
- <script>
-  document.addEventListener('DOMContentLoaded', function() {
-   JournalApp.start();
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      JournalApp.start();
     });
   </script>
-
 
 </body>
 </html>
